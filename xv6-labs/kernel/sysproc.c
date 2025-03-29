@@ -7,6 +7,17 @@
 #include "proc.h"
 #include "sysinfo.h"
 
+
+uint64 sys_trace(void) {
+    int mask;
+    if (argint(0, &mask), mask < 0) {
+      return -1;
+    }
+    struct proc *p = myproc();
+    p->trace_mask = mask;
+    return 0;
+}
+
 uint64
 sys_exit(void)
 {
