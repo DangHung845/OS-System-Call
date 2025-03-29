@@ -113,53 +113,53 @@ extern uint64 sys_trace(void);
 // to the function that handles the system call.
 static uint64 (*syscalls[])(void) = {
 [0] 0,
-[SYS_fork]    sys_fork,
-[SYS_exit]    sys_exit,
-[SYS_wait]    sys_wait,
-[SYS_pipe]    sys_pipe,
-[SYS_read]    sys_read,
-[SYS_kill]    sys_kill,
-[SYS_exec]    sys_exec,
-[SYS_fstat]   sys_fstat,
-[SYS_chdir]   sys_chdir,
-[SYS_dup]     sys_dup,
-[SYS_getpid]  sys_getpid,
-[SYS_sbrk]    sys_sbrk,
-[SYS_sleep]   sys_sleep,
-[SYS_uptime]  sys_uptime,
-[SYS_open]    sys_open,
-[SYS_write]   sys_write,
-[SYS_mknod]   sys_mknod,
-[SYS_unlink]  sys_unlink,
-[SYS_link]    sys_link,
-[SYS_mkdir]   sys_mkdir,
-[SYS_close]   sys_close,
-[SYS_trace]   sys_trace,
+[SYS_fork]     sys_fork,
+[SYS_exit]     sys_exit,
+[SYS_wait]     sys_wait,
+[SYS_pipe]     sys_pipe,
+[SYS_read]     sys_read,
+[SYS_kill]     sys_kill,
+[SYS_exec]     sys_exec,
+[SYS_fstat]    sys_fstat,
+[SYS_chdir]    sys_chdir,
+[SYS_dup]      sys_dup,
+[SYS_getpid]   sys_getpid,
+[SYS_sbrk]     sys_sbrk,
+[SYS_sleep]    sys_sleep,
+[SYS_uptime]   sys_uptime,
+[SYS_open]     sys_open,
+[SYS_write]    sys_write,
+[SYS_mknod]    sys_mknod,
+[SYS_unlink]   sys_unlink,
+[SYS_link]     sys_link,
+[SYS_mkdir]    sys_mkdir,
+[SYS_close]    sys_close,
+[SYS_trace]    sys_trace,
 };
 
 int syscall_arg_count[] = {
-  [SYS_fork]   = 0, //       No arguments
-  [SYS_exit]   = 1, // int   [status] x
-  [SYS_wait]   = 1, // int*  [wstatus]x
-  [SYS_pipe]   = 1, // int*  [pipefd]x
-  [SYS_read]   = 3, // int   [fd], void*  [buf], int  [count]x
-  [SYS_kill]   = 1, // int   [pid] x
-  [SYS_exec]   = 2, // char* [path], char** [argv]x
-  [SYS_fstat]  = 2, // int   [fd], struct stat* [statbuf]x
-  [SYS_chdir]  = 1, // char* [path]x
-  [SYS_dup]    = 1, // int   [fd]x
-  [SYS_getpid] = 0, //       No arguments
-  [SYS_sbrk]   = 1, // int   [increment]x
-  [SYS_sleep]  = 1, // int   [seconds]x
-  [SYS_uptime] = 0, //       No arguments
-  [SYS_open]   = 2, // char* [pathname], int [flags]x
-  [SYS_write]  = 3, // int   [fd], void*  [buf], int  [count]x
-  [SYS_mknod]  = 3, // char* [path], int [mode], int [dev]x
-  [SYS_unlink] = 1, // char* [pathname]x
-  [SYS_link]   = 2, // char* [oldpath], char* [newpath]x
-  [SYS_mkdir]  = 1, // char* [pathname]x
-  [SYS_close]  = 1, // int   [fd]x
-  [SYS_trace]  = 1  // int   [mask]x
+  [SYS_fork]    = 0, //       No arguments
+  [SYS_exit]    = 1, // int   [status] x
+  [SYS_wait]    = 1, // int*  [wstatus]x
+  [SYS_pipe]    = 1, // int*  [pipefd]x
+  [SYS_read]    = 3, // int   [fd], void*  [buf], int  [count]x
+  [SYS_kill]    = 1, // int   [pid] x
+  [SYS_exec]    = 2, // char* [path], char** [argv]x
+  [SYS_fstat]   = 2, // int   [fd], struct stat* [statbuf]x
+  [SYS_chdir]   = 1, // char* [path]x
+  [SYS_dup]     = 1, // int   [fd]x
+  [SYS_getpid]  = 0, //       No arguments
+  [SYS_sbrk]    = 1, // int   [increment]x
+  [SYS_sleep]   = 1, // int   [seconds]x
+  [SYS_uptime]  = 0, //       No arguments
+  [SYS_open]    = 2, // char* [pathname], int [flags]x
+  [SYS_write]   = 3, // int   [fd], void*  [buf], int  [count]x
+  [SYS_mknod]   = 3, // char* [path], int [mode], int [dev]x
+  [SYS_unlink]  = 1, // char* [pathname]x
+  [SYS_link]    = 2, // char* [oldpath], char* [newpath]x
+  [SYS_mkdir]   = 1, // char* [pathname]x
+  [SYS_close]   = 1, // int   [fd]x
+  [SYS_trace]   = 1  // int   [mask]x
 }; 
 
 void
@@ -174,7 +174,6 @@ syscall(void)
   };
 
   num = p->trapframe->a7;
-  if(num == SYS_write) return; // ignore write system call
 
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) { // num is a valid syscall number
     int return_val = syscalls[num]();
